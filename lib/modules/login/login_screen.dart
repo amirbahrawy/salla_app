@@ -5,6 +5,8 @@ import 'package:ecommerce_app/modules/register/register_screen.dart';
 import 'package:ecommerce_app/shared/components/components.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../layouts/shop_layout.dart';
+import '../../shared/network/local/cache_helper.dart';
 
 class LoginScreen extends StatelessWidget {
   final emailController = TextEditingController();
@@ -18,7 +20,21 @@ class LoginScreen extends StatelessWidget {
     return BlocProvider(
       create: (context) => LoginCubit(),
       child: BlocConsumer<LoginCubit, LoginStates>(
-        listener: (context, state) {},
+        listener: (context, state) {
+          if (state is LoginSuccessState) {
+            if (state.loginModel?.status == true) {
+              debugPrint(state.loginModel?.message);
+              debugPrint(state.loginModel?.data?.token);
+              showToast('${state.loginModel?.message}', Colors.green);
+              CacheHelper.putData(
+                      key: 'token', value: state.loginModel?.data?.token)
+                  .then((value) => navigateAndFinish(context, ShopLayout()));
+            } else {
+              debugPrint(state.loginModel?.message);
+              showToast('${state.loginModel?.message}', Colors.red);
+            }
+          }
+        },
         builder: (context, state) {
           var cubit = LoginCubit.get(context);
           return Scaffold(
@@ -90,7 +106,7 @@ class LoginScreen extends StatelessWidget {
                             builder: (context) => defaultButton(
                                   function: () {
                                     if (formKey.currentState!.validate()) {
-                                        cubit.userLogin(
+                                      cubit.userLogin(
                                         email: emailController.text,
                                         password: passwordController.text,
                                       );

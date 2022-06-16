@@ -1,3 +1,5 @@
+import 'package:ecommerce_app/layouts/shop_layout.dart';
+import 'package:ecommerce_app/modules/login/login_screen.dart';
 import 'package:ecommerce_app/modules/on_boarding/on_boarding_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -12,14 +14,32 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   DioHelper.init();
   await CacheHelper.init();
+  bool isDark = CacheHelper.getData(key: 'isDark');
+  bool? onBoarding = CacheHelper.getData(key: 'onBoarding');
+  String? token = CacheHelper.getData(key: 'token');
+  late Widget widget;
+  if (onBoarding != null) {
+    if (token != null) {
+      widget = ShopLayout();
+    } else {
+      widget = LoginScreen();
+    }
+  }
+  else {
+    widget = const OnBoardingScreen();
+  }
   BlocOverrides.runZoned(
-    () => runApp(const MyApp()),
+    () => runApp(MyApp(isDark: isDark, startWidget: widget)),
     blocObserver: MyBlocObserver(),
   );
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  final bool isDark;
+  final Widget startWidget;
+
+  const MyApp({Key? key, required this.isDark, required this.startWidget})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +48,7 @@ class MyApp extends StatelessWidget {
       theme: lightTheme,
       darkTheme: darkTheme,
       themeMode: ThemeMode.light,
-      home: const OnBoardingScreen(),
+      home: startWidget,
     );
   }
 }

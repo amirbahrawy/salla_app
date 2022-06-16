@@ -2,6 +2,7 @@ import 'package:ecommerce_app/models/boarding_model.dart';
 import 'package:ecommerce_app/modules/login/login_screen.dart';
 import 'package:ecommerce_app/shared/components/components.dart';
 import 'package:ecommerce_app/modules/on_boarding/build_boarding_item.dart';
+import 'package:ecommerce_app/shared/network/local/cache_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import '../../shared/styles/colors.dart';
@@ -31,15 +32,19 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
   ];
   bool isLast = false;
 
+  void submit() {
+    CacheHelper.putData(key: 'onBoarding', value: true).then((value) {
+      if (value) {
+        navigateAndFinish(context, LoginScreen());
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          actions: [
-            defaultTextButton(
-                function: () => navigateAndFinish(context, LoginScreen()),
-                text: 'skip')
-          ],
+          actions: [defaultTextButton(function: () => submit, text: 'skip')],
         ),
         body: Padding(
           padding: const EdgeInsets.all(30.0),
@@ -86,7 +91,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                   FloatingActionButton(
                     onPressed: () {
                       if (isLast) {
-                        navigateAndFinish(context, LoginScreen());
+                        submit();
                       } else {
                         boardController.nextPage(
                           duration: const Duration(
