@@ -25,4 +25,7 @@ class CacheHelper {
   static dynamic getData({required String key}) {
     return shared.get(key);
   }
+  static Future<bool> removeData ({required String key})async{
+    return await shared.remove(key);
+  }
 }

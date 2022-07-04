@@ -20,8 +20,7 @@ ThemeData lightTheme = ThemeData(
   fontFamily: 'Jannah',
   bottomNavigationBarTheme: const BottomNavigationBarThemeData(
       type: BottomNavigationBarType.fixed,
-      selectedItemColor: Colors.deepOrange),
-  floatingActionButtonTheme: const FloatingActionButtonThemeData(backgroundColor: defaultColor)
+      selectedItemColor: defaultColor),
 );
 ThemeData darkTheme = ThemeData(
   fontFamily: 'Jannah',

@@ -44,7 +44,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          actions: [defaultTextButton(function: () => submit, text: 'skip')],
+          actions: [defaultTextButton(function:submit, text: 'skip')],
         ),
         body: Padding(
           padding: const EdgeInsets.all(30.0),

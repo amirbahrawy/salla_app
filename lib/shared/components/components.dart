@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import '../../modules/login/login_screen.dart';
+import '../network/local/cache_helper.dart';
 import '../styles/colors.dart';
 void navigateTo(context, widget) {
   Navigator.push(context, MaterialPageRoute(builder: (context) => widget));
@@ -96,4 +98,8 @@ void showToast(String msg,Color color){
       textColor: Colors.white,
       fontSize: 16.0
   );
+}
+void signOut(context){
+  CacheHelper.removeData(key: 'token')
+      .then((value) => navigateAndFinish(context, LoginScreen()));
 }
