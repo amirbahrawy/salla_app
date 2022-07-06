@@ -1,14 +1,19 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:ecommerce_app/shared/cubit/cubit.dart';
 import 'package:ecommerce_app/shared/styles/colors.dart';
 import 'package:flutter/material.dart';
+import '../../models/categories_model.dart';
 import '../../models/home_model.dart';
 
-Widget productsBuilder(HomeModel? model) => SingleChildScrollView(
+Widget productsBuilder(
+        HomeModel? homeModel, CategoriesModel? categoriesModel, context) =>
+    SingleChildScrollView(
       physics: const BouncingScrollPhysics(),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           CarouselSlider(
-              items: model?.data.banners
+              items: homeModel?.data.banners
                   .map((e) => Image(
                         image: NetworkImage(e.image),
                         width: double.infinity,
@@ -19,13 +24,47 @@ Widget productsBuilder(HomeModel? model) => SingleChildScrollView(
                   height: 200.0,
                   initialPage: 0,
                   enableInfiniteScroll: true,
-                  viewportFraction: 1.0,
+                  viewportFraction: 0.9,
                   reverse: false,
                   autoPlay: true,
                   autoPlayInterval: const Duration(seconds: 3),
                   autoPlayAnimationDuration: const Duration(seconds: 1),
                   autoPlayCurve: Curves.fastOutSlowIn,
                   scrollDirection: Axis.horizontal)),
+          const SizedBox(
+            height: 15,
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text(
+                  'Categories',
+                  style: TextStyle(fontSize: 22.0),
+                ),
+                const SizedBox(
+                  height: 15,
+                ),
+                SizedBox(
+                  height: 100.0,
+                  child: ListView.separated(
+                      physics: const BouncingScrollPhysics(),
+                      scrollDirection: Axis.horizontal,
+                      itemBuilder: (context, index) => buildCategoryItem(
+                          categoriesModel!.categoriesData.data[index]),
+                      separatorBuilder: (context, index) => const SizedBox(
+                            width: 8.0,
+                          ),
+                      itemCount: categoriesModel!.categoriesData.data.length),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                const Text('New Products', style: TextStyle(fontSize: 22.0)),
+              ],
+            ),
+          ),
           const SizedBox(
             height: 15,
           ),
@@ -38,15 +77,17 @@ Widget productsBuilder(HomeModel? model) => SingleChildScrollView(
               crossAxisSpacing: 2.0,
               mainAxisSpacing: 2.0,
               physics: const NeverScrollableScrollPhysics(),
-              children: List.generate(model!.data.products.length,
-                  (index) => buildProductItem(model.data.products[index])),
+              children: List.generate(
+                  homeModel!.data.products.length,
+                  (index) => buildProductItem(
+                      homeModel.data.products[index], context)),
             ),
           )
         ],
       ),
     );
 
-Widget buildProductItem(ProductModel productModel) => Stack(
+Widget buildProductItem(ProductModel productModel, context) => Stack(
       children: [
         Container(
           padding: const EdgeInsets.only(left: 10.0),
@@ -83,8 +124,15 @@ Widget buildProductItem(ProductModel productModel) => Stack(
                     ),
                   const Spacer(),
                   IconButton(
-                    icon: const Icon(Icons.favorite_border),
-                    onPressed: () {},
+                    icon: ShopCubit.get(context).favoritesData[productModel.id]!
+                        ? const Icon(Icons.favorite_border)
+                        : const Icon(
+                            Icons.favorite,
+                            color: defaultColor,
+                          ),
+                    onPressed: () {
+                      ShopCubit.get(context).changeFavorites(productModel.id);
+                    },
                   )
                 ],
               )
@@ -105,5 +153,26 @@ Widget buildProductItem(ProductModel productModel) => Stack(
               ),
             ),
           )
+      ],
+    );
+
+Widget buildCategoryItem(DataModel model) => Stack(
+      alignment: AlignmentDirectional.bottomStart,
+      children: [
+        Image(
+          image: NetworkImage(model.image),
+          height: 100.0,
+          width: 100.0,
+        ),
+        Container(
+          width: 100.0,
+          color: Colors.black.withOpacity(0.8),
+          child: Text(
+            model.name,
+            style: const TextStyle(color: Colors.white),
+            textAlign: TextAlign.center,
+            maxLines: 1,
+          ),
+        )
       ],
     );
