@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../models/change_favorites_model.dart';
+import '../../models/favorites_model.dart';
 import '../../models/home_model.dart';
 import '../../shared/components/constants.dart';
 
@@ -21,6 +22,7 @@ class ShopCubit extends Cubit<ShopStates> {
   Map<int, bool> favoritesData = {};
   HomeModel? homeModel;
   CategoriesModel? categoriesModel;
+  FavoritesModel? favoritesModel;
   ChangeFavoritesModel? changeFavoritesModel;
   List<Widget> bottomScreens = const [
     ProductsScreen(),
@@ -46,6 +48,7 @@ class ShopCubit extends Cubit<ShopStates> {
       emit(ShopSuccessHomeDataState());
     }).catchError((error) {
       debugPrint(error.toString());
+      emit(ShopErrorHomeDataState());
     });
   }
 
@@ -57,9 +60,20 @@ class ShopCubit extends Cubit<ShopStates> {
       emit(ShopSuccessCategoriesDataState());
     }).catchError((error) {
       debugPrint(error.toString());
+      emit(ShopErrorCategoriesDataState());
     });
   }
-
+  void getFavoritesData() {
+    emit(ShopLoadingGetFavoritesState());
+    DioHelper.getData(url: favorites, token: token).then((value) {
+      favoritesModel = FavoritesModel.fromJson(value.data);
+      debugPrint(favoritesModel?.data.data![0].product?.name);
+      emit(ShopSuccessGetFavoritesState());
+    }).catchError((error) {
+      debugPrint(error.toString());
+      emit(ShopErrorGetFavoritesState());
+    });
+  }
   void changeFavorites(int id) {
     favoritesData[id]=!favoritesData[id]!;
     emit(ShopChangeFavoritesState());
@@ -69,6 +83,9 @@ class ShopCubit extends Cubit<ShopStates> {
           debugPrint(changeFavoritesModel?.message);
           if(!changeFavoritesModel!.status!){
             favoritesData[id]=!favoritesData[id]!;
+          }
+          else{
+            getFavoritesData();    zzgtyeghegrh
           }
       emit(ShopSuccessChangeFavoritesState(changeFavoritesModel));
     }).catchError((error) {

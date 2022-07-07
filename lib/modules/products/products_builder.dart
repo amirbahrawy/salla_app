@@ -125,11 +125,11 @@ Widget buildProductItem(ProductModel productModel, context) => Stack(
                   const Spacer(),
                   IconButton(
                     icon: ShopCubit.get(context).favoritesData[productModel.id]!
-                        ? const Icon(Icons.favorite_border)
-                        : const Icon(
+                        ? const Icon(
                             Icons.favorite,
                             color: defaultColor,
-                          ),
+                          )
+                        : const Icon(Icons.favorite_border),
                     onPressed: () {
                       ShopCubit.get(context).changeFavorites(productModel.id);
                     },
