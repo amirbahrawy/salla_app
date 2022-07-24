@@ -6,6 +6,7 @@ import 'package:ecommerce_app/shared/components/components.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../layouts/shop_layout.dart';
+import '../../shared/components/constants.dart';
 import '../../shared/network/local/cache_helper.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -28,7 +29,10 @@ class LoginScreen extends StatelessWidget {
               showToast('${state.loginModel?.message}', Colors.green);
               CacheHelper.putData(
                       key: 'token', value: state.loginModel?.data?.token)
-                  .then((value) => navigateAndFinish(context, ShopLayout()));
+                  .then((value) {
+                token=state.loginModel?.data?.token;
+                navigateAndFinish(context, const ShopLayout());
+              });
             } else {
               debugPrint(state.loginModel?.message);
               showToast('${state.loginModel?.message}', Colors.red);

@@ -6,9 +6,21 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../modules/search/search_screen.dart';
 import '../shared/components/components.dart';
 
-class ShopLayout extends StatelessWidget {
+class ShopLayout extends StatefulWidget {
   const ShopLayout({Key? key}) : super(key: key);
+  @override
+  State<ShopLayout> createState() => _ShopLayoutState();
 
+}
+
+class _ShopLayoutState extends State<ShopLayout> {
+  @override
+  void initState() {
+    super.initState();
+    var c = ShopCubit.get(context);
+    c.getUserData();
+    c.getFavoritesData();
+  }
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<ShopCubit, ShopStates>(
@@ -64,4 +76,6 @@ class ShopLayout extends StatelessWidget {
         },
         listener: (context, state) {});
   }
+
+
 }
