@@ -14,7 +14,7 @@ ThemeData lightTheme = ThemeData(
     iconTheme: IconThemeData(color: Colors.black),
     elevation: 0.0,
     titleTextStyle: TextStyle(
-        color: Colors.black, fontSize: 22.0, fontWeight: FontWeight.bold),
+        color: Colors.black, fontSize: 22.0,fontFamily: 'Jannah'),
     backgroundColor: Colors.white,
   ),
   fontFamily: 'Jannah',

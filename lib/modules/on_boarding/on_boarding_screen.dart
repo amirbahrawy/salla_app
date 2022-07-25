@@ -1,5 +1,5 @@
 import 'package:ecommerce_app/models/boarding_model.dart';
-import 'package:ecommerce_app/modules/login/login_screen.dart';
+import 'package:ecommerce_app/modules/welcome/welcome_screen.dart';
 import 'package:ecommerce_app/shared/components/components.dart';
 import 'package:ecommerce_app/modules/on_boarding/build_boarding_item.dart';
 import 'package:ecommerce_app/shared/network/local/cache_helper.dart';
@@ -18,24 +18,25 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
   var boardController = PageController();
   static const List<BoardingModel> boarding = [
     BoardingModel(
-        image: 'assets/images/onboard_1.jpg',
-        title: 'on board1 title',
-        body: 'on board1 body'),
+        image: 'assets/images/onboard_1.png',
+        title: 'Get food delivery to your doorstep asap',
+        body:
+            'we have young and professional delivery team that will bring your food as soon as possible to your doorstep'),
     BoardingModel(
-        image: 'assets/images/onboard_1.jpg',
-        title: 'on board2 title',
-        body: 'on board2 body'),
+        image: 'assets/images/onboard_2.png',
+        title: 'Buy Any Food from your favorite restaurant',
+        body: 'We are constantly adding your favorite restaurant throughout the territory and around your area carefully selected'),
     BoardingModel(
-        image: 'assets/images/onboard_1.jpg',
-        title: 'on board3 title',
-        body: 'on board3 body'),
+        image: 'assets/images/onboard_3.png',
+        title: 'Get exclusive offer from your favourite restaurant',
+        body: 'We are constantly bringing your favorite food from your favorite restaurant with various types of offers'),
   ];
   bool isLast = false;
 
   void submit() {
     CacheHelper.putData(key: 'onBoarding', value: true).then((value) {
       if (value) {
-        navigateAndFinish(context, LoginScreen());
+        navigateAndFinish(context, const WelcomeScreen());
       }
     });
   }
@@ -44,7 +45,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          actions: [defaultTextButton(function:submit, text: 'skip')],
+          actions: [defaultTextButton(function: submit, text: 'skip')],
         ),
         body: Padding(
           padding: const EdgeInsets.all(30.0),

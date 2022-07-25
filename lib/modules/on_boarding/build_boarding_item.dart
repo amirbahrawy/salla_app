@@ -7,7 +7,7 @@ Widget buildBoardingItem (BoardingModel item) => Column(
       Expanded(child: Image(image: AssetImage(item.image),)),
       Text(item.title,style: const TextStyle(fontSize: 24.0),),
       const SizedBox(height: 15,),
-      Text(item.body,style: const TextStyle(fontSize: 14.0),),
+      Text(item.body,style: const TextStyle(fontSize: 14.0,color: Colors.grey),),
 
     ],
   );
