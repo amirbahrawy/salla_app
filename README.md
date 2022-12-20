@@ -1,16 +1,20 @@
-# ecommerce_app
+# SallaApp
+E-commerce App allows customers to browse and purchase items from an online store 
 
-A new Flutter project.
+# Features
+1- Responsive design.
+2-Shared prefrence
+3- Restful api
+4-Bloc StateManagement
 
-## Getting Started
+# ScreenShots
 
-This project is a starting point for a Flutter application.
+![4941de71-8fd4-4aab-afb1-8a07e24e0b62](https://user-images.githubusercontent.com/38887148/206859945-5dab57af-2f91-46ef-a9ea-e00e4bda9139.jpg)
 
-A few resources to get you started if this is your first Flutter project:
+![935ec19c-adf6-43f1-9e02-324cd21db4c2](https://user-images.githubusercontent.com/38887148/206859921-91da2bf8-4460-476e-b04e-49fe2b859e74.jpg)
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+![59cfae3a-3a28-4fea-817b-c2435ed465e3](https://user-images.githubusercontent.com/38887148/206859970-5edff9bf-3e00-457a-ad85-addeecaf2730.jpg)
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+![c358f36b-deba-4f04-996f-baaff98ac9db](https://user-images.githubusercontent.com/38887148/206859984-9d9e5168-62af-40f1-89ce-626e00bb15ba.jpg)
+
+
